@@ -110,7 +110,7 @@ void position::turn()
 // Compare 2 position and check if they are the same 
 bool compare(position imp, position exp)
 {
-	//Si les deux paramètres sont à la fin
+	//If both parameter are the same
 	if (imp.getPosX() == exp.getPosX() && imp.getPosY() == exp.getPosY())
 	{
 		return true;
