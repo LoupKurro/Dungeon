@@ -1,6 +1,6 @@
 /**********************************************************
 Creator : Loup Olivier Gaven-Forest & Marie-Noelle Dussault
-Date : November 11th 2017
+Date : November 27th 2017
 File : position.h
 Goal : Object keeping a position and a direction
 **********************************************************/
