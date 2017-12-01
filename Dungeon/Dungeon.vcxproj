@@ -110,10 +110,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="position.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="mapTab.h" />
     <ClInclude Include="position.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
