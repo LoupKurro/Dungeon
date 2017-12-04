@@ -108,7 +108,3 @@ bool Dungeon::canCreate(int xRoom, int yRoom, position startRoom) {
 	return true;
 }
 
-//Create the door in a room 
-void Dungeon::createDoor() {
-
-}

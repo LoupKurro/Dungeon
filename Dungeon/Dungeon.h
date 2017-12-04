@@ -34,5 +34,4 @@ public :
 	void createRooms(); //Create the rooms in the map 
 	void buildRoom(int xRoom, int yRoom, position startRoom);	//Build one rooom with the parameters 
 	bool canCreate(int xRoom, int yRoom, position startRoom);	//Verify if the room can be created
-	void createDoor();	//Create the door in a room 
 };
