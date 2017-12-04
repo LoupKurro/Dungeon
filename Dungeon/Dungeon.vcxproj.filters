@@ -21,7 +21,13 @@
     <ClCompile Include="position.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+
+    <ClCompile Include="menu.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="button.cpp">
     <ClCompile Include="Dungeon.cpp">
+
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,6 +35,16 @@
     <ClInclude Include="position.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+
+    <ClInclude Include="menu.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
     <ClInclude Include="Dungeon.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
