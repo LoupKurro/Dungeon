@@ -111,14 +111,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+
     <ClCompile Include="button.cpp" />
+    <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="position.cpp" />
   </ItemGroup>
   <ItemGroup>
+
     <ClInclude Include="button.h" />
     <ClInclude Include="menu.h" />
+    <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="list.hpp" />
+    <ClInclude Include="mapTab.h" />
     <ClInclude Include="position.h" />
   </ItemGroup>
   <ItemGroup>
