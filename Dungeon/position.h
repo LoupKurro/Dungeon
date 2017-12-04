@@ -20,7 +20,7 @@ private:
 
 public:
 	position();							//Constructor without parameter
-	position(int posX, int posY);		//Constructor with parameters
+	position(int posX, int posY, char dir = 'N');		//Constructor with parameters
 	~position();						//Destructor
 
 	//Gets
@@ -41,6 +41,8 @@ public:
 
 	//Operator == calling the compare method of position
 	bool operator==(const position& d);
+	bool operator!=(const position& d);
+	 
 };
 
 //Operator << calling the print method of position

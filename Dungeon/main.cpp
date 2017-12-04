@@ -9,5 +9,9 @@ void main() {
 	test.init(20, 6, 7, 50, 50);
  	test.createRooms();
 	test.print(cout);
+
+	//test.createHallway();
+	//test.print(cout);
+
 	system("pause");
 }

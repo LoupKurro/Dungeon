@@ -11,6 +11,9 @@ Goal : Object creating the base of a dungeon (Rooms and Doors)
 #include <random>
 #include <time.h> 
 #include <queue>
+#include "list.hpp"
+//#include <list>
+#include <cmath>
 
 using namespace std;
 
@@ -27,12 +30,62 @@ private :
 	int _maxSizeXRooms;	//Highest size in X for the Rooms
 	int _maxSizeYRooms;	//Highest size in Y for the Rooms
 
-	 queue<position> doors; //Keep the positions of the doors created
+	queue<position> doors; //Keep the positions of the doors created
+
+	struct node
+	{
+		position pos;
+		int distance;
+		int cost;
+		int score;
+		position parent;		
+
+		node() = default;
+		node(position po, position pa,  int d = 0, int c = 0, int score = 0 ) {
+			pos = po;
+			parent = pa;
+			distance = d;
+			cost = c;
+		};
+		void calc(const node &e, const node &c) {
+			int xDist = abs(pos.getPosX() - e.pos.getPosX());
+			int yDist = abs(pos.getPosY() - e.pos.getPosY());
+
+			distance = (xDist + yDist)*5;
+			cost = c.cost + 1;
+			score = distance + cost;
+		}
+	 };
+
+	node _start, _end;
+	list<node> _openList;
+	list<node> _closeList;
+	list<node> _path;
+
+	list<node>::iterator _itO = _openList.begin();
+	list<node>::iterator _itC = _closeList.begin();
+	list<node>::iterator _itP = _path.begin();
+
 public :
 	void init(int rooms, int xRooms, int yRooms, int xMap, int yMap); //Set the 5 parameters of the map and fill the map with empty cases ('E')
 	void clearDungeon(); //Put the parameters of the map back to 0
 	void createRooms(); //Create the rooms in the map 
 	void buildRoom(int xRoom, int yRoom, position startRoom);	//Build one rooom with the parameters 
 	bool canCreate(int xRoom, int yRoom, position startRoom);	//Verify if the room can be created
-	void createDoor();	//Create the door in a room 
+	
+
+	void createHallway();
+	void findPath();
+	bool checkAround(int i, node & c, node &n);
+	void ifIsInTheLists(const node & n);
+
+	//bool isInList(list<node> &l, node & n);
+	
+	
+
+
+	/*void pathfinding(node start, node end, list<node> &path);
+	void checkAround(node &c, node &e, list<node> &w);
+	void addNode(position &p, list<node>& w, node &e, node &s);
+	node & findBestMove(list<node> &w, node &c);*/
 };

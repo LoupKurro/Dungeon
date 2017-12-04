@@ -15,10 +15,10 @@ position::position() {
 }
 
 //Constructor with parameter
-position::position(int x, int y) {
+position::position(int x, int y, char dir) {
 	_posX = x;
 	_posY = y;
-	_direction = 'N';
+	_direction = dir;
 }
 
 //Destructor
@@ -108,6 +108,11 @@ bool compare(position imp, position exp) {
 //Operator == calling the compare method of position
 bool position::operator==(const position& d) {
 	return compare(*this, d);
+}
+
+bool position::operator!=(const position & d)
+{
+	return !compare(*this, d);
 }
 
 //Operator << calling the print method of position

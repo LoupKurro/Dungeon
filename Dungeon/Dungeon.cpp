@@ -81,7 +81,7 @@ void Dungeon::buildRoom(int xRoom, int yRoom, position startRoom) {
 					//If we are at the position of the door
 					if (doorWall == doorPosition) {
 						at(i, j) = 'D';
-						position door(i, j);
+						position door(i, j, ' ');
 						doors.push(door);
 					}
 					doorWall++;
@@ -108,7 +108,101 @@ bool Dungeon::canCreate(int xRoom, int yRoom, position startRoom) {
 	return true;
 }
 
-//Create the door in a room 
-void Dungeon::createDoor() {
 
+void Dungeon::createHallway()
+{
+	_end = node(doors.front(), doors.front());
+	doors.pop();
+
+	while (!doors.empty()){
+		_openList.clear();
+		_closeList.clear();
+		_start = _end;
+		_end = node(doors.front(), doors.front());
+		doors.pop();
+		findPath();
+	}
 }
+
+void Dungeon::findPath() {
+	node current;
+	node newNode;
+
+	 
+	_itO = _openList.insert(_itC, _start);
+
+	do {
+		_itO = _openList.begin();	
+		_itC = _closeList.begin();
+
+		current = *_itO;
+		_closeList.insert(_itC, current);
+		_openList.erase(_itO);
+
+		if (current.pos == _end.pos)
+			return;
+		
+		for (int i = 0; i < 4; i++)
+			if (checkAround(i, current, newNode)) {
+				ifIsInTheLists(newNode);
+
+				
+						
+			}
+
+	} while (!_openList.empty());
+	
+}
+
+bool Dungeon::checkAround(int i, node & c, node & n)
+{
+	position newPos = c.pos;
+
+	switch (i)
+	{
+	case 0:
+		newPos.setPosX(newPos.getPosX() - 1);
+		break;
+	case 1:
+		newPos.setPosX(newPos.getPosX() + 1);
+		break;
+	case 2:
+		newPos.setPosY(newPos.getPosY() - 1);
+		break;
+	case 3:
+		newPos.setPosY(newPos.getPosY() + 1);
+	default:
+		break;
+	}
+
+	int x = newPos.getPosX();
+	int y = newPos.getPosY();
+
+	if (x >= 0 && x < _nbLine && y >= 0 && y < _nbLine)
+		if (at(x, y) == 'E' || at(x, y) == 'H' || at(x, y) == 'D') {
+			n = node(newPos, c.pos);
+			return true;
+		}
+	return false;
+}
+
+bool Dungeon::ifIsInTheLists(const node & n)
+{
+	_itC = _closeList.begin();
+
+	while (_itC != _closeList.end()) {
+		if ((*_itC).pos == n.pos)
+			return true;
+
+		_itC++;
+	}
+	return false;
+}
+
+
+
+
+
+
+
+

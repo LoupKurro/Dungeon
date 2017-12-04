@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Dungeon.h" />
+    <ClInclude Include="list.hpp" />
     <ClInclude Include="mapTab.h" />
     <ClInclude Include="position.h" />
   </ItemGroup>
