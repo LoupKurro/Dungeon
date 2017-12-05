@@ -11,13 +11,14 @@ Goal : Object creating the base of a dungeon (Rooms and Doors)
 #include <random>
 #include <time.h> 
 #include <queue>
-#include "list.hpp"
-//#include <list>
+//#include "list.hpp"
+#include <list>
 #include <cmath>
+#include <stack>
 
 using namespace std;
 
-class Dungeon :public map<char>
+class Dungeon :public mapTab<char>
 {
 private :
 	//Const Variables for the creations of the rooms
@@ -35,9 +36,9 @@ private :
 	struct node
 	{
 		position pos;
-		int distance;
+		float distance;
 		int cost;
-		int score;
+		float score;
 		position parent;		
 
 		node() = default;
@@ -51,7 +52,8 @@ private :
 			int xDist = abs(pos.getPosX() - e.pos.getPosX());
 			int yDist = abs(pos.getPosY() - e.pos.getPosY());
 
-			distance = (xDist + yDist)*5;
+			distance = (xDist + yDist);
+			
 			cost = c.cost + 1;
 			score = distance + cost;
 		}
@@ -60,11 +62,12 @@ private :
 	node _start, _end;
 	list<node> _openList;
 	list<node> _closeList;
-	list<node> _path;
+	stack<node> _path;
+	stack<node> _finalPath;
 
 	list<node>::iterator _itO = _openList.begin();
 	list<node>::iterator _itC = _closeList.begin();
-	list<node>::iterator _itP = _path.begin();
+	
 
 public :
 	void init(int rooms, int xRooms, int yRooms, int xMap, int yMap); //Set the 5 parameters of the map and fill the map with empty cases ('E')
@@ -77,9 +80,12 @@ public :
 	void createHallway();
 	void findPath();
 	bool checkAround(int i, node & c, node &n);
-	void ifIsInTheLists(const node & n);
+	bool inClose(const node & n);
+	bool inOpen(const node & n);
 
-	//bool isInList(list<node> &l, node & n);
+	void addToOpen(const node &n);
+	node findParent(const node &c);
+	
 	
 	
 
