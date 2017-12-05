@@ -247,7 +247,7 @@ void mapTab<TYPE>::read(istream& entree) {
 }
 
 
-//Opérateurs
+//Operator
 template <class TYPE>
 ostream& operator<<(ostream& sortie, const mapTab<TYPE>& map) {
 	map.print(sortie);

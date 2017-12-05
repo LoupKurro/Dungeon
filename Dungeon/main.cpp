@@ -9,12 +9,16 @@ void main()
 {
 	//Creating the map
 	Dungeon test;
+
 	test.init(15, 12, 12, 50, 50);
 	test.createRooms();
 
 	//Creating the window
 	sf::RenderWindow window(sf::VideoMode(500, 500), "Dungeon Generator");
 	window.setVerticalSyncEnabled(true);
+
+	test.createHallway();
+
 
 	//Creating the View (Camera)
 	sf::View camera(sf::Vector2f(250, 250), sf::Vector2f(500, 500));

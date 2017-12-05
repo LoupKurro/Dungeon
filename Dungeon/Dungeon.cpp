@@ -11,7 +11,7 @@ Goal : Object creating the base of a dungeon (Rooms and Doors)
 void Dungeon::init(int rooms, int xRooms, int yRooms, int xMap, int yMap) {
 	assert(rooms >= _minNbRooms);
 	assert(xRooms >= (_minSizeXRooms-2) && yRooms >= (_minSizeYRooms-2));
-	assert(xMap >= 50 && yMap >= 50);	//Assure that the map will be 50x50 or more
+	//assert(xMap >= 50 && yMap >= 50);	//Assure that the map will be 50x50 or more
 	
 	_maxNbRooms = rooms;
 	_maxSizeXRooms = xRooms + 2;	//Add 2 for the Empty cases around the room
@@ -81,7 +81,7 @@ void Dungeon::buildRoom(int xRoom, int yRoom, position startRoom) {
 					//If we are at the position of the door
 					if (doorWall == doorPosition) {
 						at(i, j) = 'D';
-						position door(i, j, ' ');
+						position door(i, j, 'N');
 						doors.push(door);
 					}
 					doorWall++;
@@ -120,7 +120,16 @@ void Dungeon::createHallway()
 		_start = _end;
 		_end = node(doors.front(), doors.front());
 		doors.pop();
+		_start.calc(_end, _start);
 		findPath();
+	
+		while (!_path.empty()) {
+			node toAdd = _path.top();
+			_path.pop();
+			if(at(toAdd.pos.getPosX(), toAdd.pos.getPosY()) != 'D')
+				at(toAdd.pos.getPosX(), toAdd.pos.getPosY()) = 'H';
+		}
+		print(cout);
 	}
 }
 
@@ -128,30 +137,41 @@ void Dungeon::findPath() {
 	node current;
 	node newNode;
 
-	 
-	_itO = _openList.insert(_itC, _start);
+	_itO = _openList.begin();
+	_itC = _closeList.begin();
+	_openList.insert(_itO, _start);
 
 	do {
-		_itO = _openList.begin();	
-		_itC = _closeList.begin();
-
+		_itO = _openList.begin();
+		//_itC = _closeList.begin();
+		
 		current = *_itO;
 		_closeList.insert(_itC, current);
 		_openList.erase(_itO);
 
-		if (current.pos == _end.pos)
-			return;
-		
-		for (int i = 0; i < 4; i++)
-			if (checkAround(i, current, newNode)) {
+		if (current.pos == _end.pos) {
+			while (current.pos != _start.pos) {
 
-				
-						
+				current = findParent(current);
+				_path.push(current);
+
 			}
+			return;
+		}
 
+		for (int i = 0; i < 4; i++) {
+
+			if (checkAround(i, current, newNode))
+				if (!inClose(newNode))
+					if (!inOpen(newNode))
+						addToOpen(newNode);
+					else if (newNode.score < (*_itO).score)
+						(*_itO) = newNode;
+		}
 	} while (!_openList.empty());
-	
+
 }
+
 
 bool Dungeon::checkAround(int i, node & c, node & n)
 {
@@ -160,16 +180,20 @@ bool Dungeon::checkAround(int i, node & c, node & n)
 	switch (i)
 	{
 	case 0:
-		newPos.setPosX(newPos.getPosX() - 1);
+		if(newPos.getPosX() - 1 >= 0 && newPos.getPosX() - 1 <_nbLine)
+			newPos.setPosX(newPos.getPosX() - 1);
 		break;
 	case 1:
-		newPos.setPosX(newPos.getPosX() + 1);
+		if (newPos.getPosX() + 1 >= 0 && newPos.getPosX() + 1 <_nbLine)
+			newPos.setPosX(newPos.getPosX() + 1);
 		break;
 	case 2:
-		newPos.setPosY(newPos.getPosY() - 1);
+		if (newPos.getPosY() - 1 >= 0 && newPos.getPosY() - 1 <_nbLine)
+			newPos.setPosY(newPos.getPosY() - 1);
 		break;
 	case 3:
-		newPos.setPosY(newPos.getPosY() + 1);
+		if (newPos.getPosY() + 1 >= 0 && newPos.getPosY() + 1 <_nbLine)
+			newPos.setPosY(newPos.getPosY() + 1);
 	default:
 		break;
 	}
@@ -177,12 +201,64 @@ bool Dungeon::checkAround(int i, node & c, node & n)
 	int x = newPos.getPosX();
 	int y = newPos.getPosY();
 
-	if (x >= 0 && x < _nbLine && y >= 0 && y < _nbLine)
-		if (at(x, y) == 'E' || at(x, y) == 'H' || at(x, y) == 'D') {
-			n = node(newPos, c.pos);
-			return true;
-		}
+	
+	if (at(x, y) == 'E' || at(x, y) == 'H' || at(x, y) == 'D') {
+		n = node(newPos, c.pos);
+		n.calc(_end, c);
+		return true;
+	}
 	return false;
+}
+
+bool Dungeon::inClose(const node & n)
+{
+	_itC = _closeList.begin();
+
+	while (_itC != _closeList.end()) {
+		if ((*_itC).pos == n.pos)
+			return true;
+
+		_itC++;
+	}
+	return false;
+}
+
+bool Dungeon::inOpen(const node & n)
+{
+	_itO = _openList.begin();
+
+	while (_itO != _openList.end()) {
+		if ((*_itO).pos == n.pos)
+			return true;
+		_itO++;
+	}
+	return false;
+
+}
+
+void Dungeon::addToOpen(const node & n)
+{
+	_itO = _openList.begin();
+
+	while (_itO != _openList.end()) {	
+		if (n.score < (*_itO).score) {
+			_openList.insert(_itO, n);
+			return;
+		}			
+		_itO++;
+	}
+	_openList.insert(_itO, n);
+}
+
+Dungeon::node Dungeon::findParent(const node & c)
+{
+	_itC = _closeList.begin();
+
+	while (_itC != _closeList.end()) {
+		if ((*_itC).pos == c.parent)
+			return *_itC;
+		_itC++;
+	}
 }
 
 
