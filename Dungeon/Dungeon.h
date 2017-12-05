@@ -17,7 +17,7 @@ Goal : Object creating the base of a dungeon (Rooms and Doors)
 
 using namespace std;
 
-class Dungeon :public map<char>
+class Dungeon :public mapTab<char>
 {
 private :
 	//Const Variables for the creations of the rooms
@@ -77,7 +77,6 @@ public :
 	void createHallway();
 	void findPath();
 	bool checkAround(int i, node & c, node &n);
-	void ifIsInTheLists(const node & n);
 
 	//bool isInList(list<node> &l, node & n);
 	

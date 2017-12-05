@@ -144,7 +144,6 @@ void Dungeon::findPath() {
 		
 		for (int i = 0; i < 4; i++)
 			if (checkAround(i, current, newNode)) {
-				ifIsInTheLists(newNode);
 
 				
 						
@@ -185,20 +184,6 @@ bool Dungeon::checkAround(int i, node & c, node & n)
 		}
 	return false;
 }
-
-bool Dungeon::ifIsInTheLists(const node & n)
-{
-	_itC = _closeList.begin();
-
-	while (_itC != _closeList.end()) {
-		if ((*_itC).pos == n.pos)
-			return true;
-
-		_itC++;
-	}
-	return false;
-}
-
 
 
 
