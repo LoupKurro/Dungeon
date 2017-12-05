@@ -11,7 +11,7 @@ But: Créer une carte dynamique en utilisant un pointeur de pointeur
 using namespace std;
 
 template <class TYPE>
-class map
+class mapTab
 {
 protected:
 	char *_name;			//pointeur sur le nom de la map
@@ -20,10 +20,10 @@ protected:
 		_nbCol;		//nombre de colonne pour la matrice
 public:
 	//Constructeurs/Destructeurs
-	map();
-	map(const char* name, int line, int col);
-	map(const map& carte);
-	~map();
+	mapTab();
+	mapTab(const char* name, int line, int col);
+	mapTab(const mapTab& carte);
+	~mapTab();
 
 	//Clears
 	void clear();	//Apelle clearMartice() et clearNom()
@@ -43,13 +43,13 @@ public:
 	void print(ostream& sortie)const;  	//print la matrice (sans le nom)
 	void read(istream& entree);		//lit la matrice de la map ds le flux
 
-	const map<TYPE>& operator=(const map<TYPE>& carte);
+	const mapTab<TYPE>& operator=(const mapTab<TYPE>& carte);
 	TYPE* operator[](int line);
 };
 template <class TYPE>
-ostream& operator<<(ostream& sortie, const map<TYPE>& map);
+ostream& operator<<(ostream& sortie, const mapTab<TYPE>& map);
 template <class TYPE>
-istream& operator>>(istream& entree, map<TYPE>& x);
+istream& operator>>(istream& entree, mapTab<TYPE>& x);
 
 /***************************************************/
 /********************Méthodes***********************/
@@ -57,14 +57,14 @@ istream& operator>>(istream& entree, map<TYPE>& x);
 
 //Constructeurs/Destructeurs
 template <class TYPE>
-map<TYPE>::map() {
+mapTab<TYPE>::mapTab() {
 	_name = nullptr;
 	_map = nullptr;
 	_nbLine = _nbCol = 0;
 }
 
 template <class TYPE>
-map<TYPE>::map(const char* name, int line, int col) {
+mapTab<TYPE>::mapTab(const char* name, int line, int col) {
 	assert(line >= 0 && col >= 0);
 	_map = nullptr;
 	_name = nullptr;
@@ -82,7 +82,7 @@ map<TYPE>::map(const char* name, int line, int col) {
 }
 
 template <class TYPE>
-map<TYPE>::map(const map& carte) {
+mapTab<TYPE>::mapTab(const mapTab& carte) {
 	_nbLine = carte._nbLine;
 	_nbCol = carte._nbCol;
 	_map = _name = nullptr;
@@ -103,7 +103,7 @@ map<TYPE>::map(const map& carte) {
 }
 
 template <class TYPE>
-map<TYPE>::~map() {
+mapTab<TYPE>::~mapTab() {
 	clear();
 }
 
@@ -112,7 +112,7 @@ map<TYPE>::~map() {
 
 //Apelle clearMartice() et clearNom()
 template <class TYPE>
-void map<TYPE>::clear() {
+void mapTab<TYPE>::clear() {
 	clearMatrice();
 	clearNom();
 }
@@ -120,7 +120,7 @@ void map<TYPE>::clear() {
 
 //Vide le contenu de la carte
 template <class TYPE>
-void map<TYPE>::clearMatrice() {
+void mapTab<TYPE>::clearMatrice() {
 	for (int i = 0; i < _nbLine; i++) {
 		delete[] * (_map + i);
 	}
@@ -132,7 +132,7 @@ void map<TYPE>::clearMatrice() {
 
 //Vide le contenu du nom de la carte
 template <class TYPE>
-void map<TYPE>::clearNom() {
+void mapTab<TYPE>::clearNom() {
 	delete[] _name;
 	_name = nullptr;
 }
@@ -142,19 +142,19 @@ void map<TYPE>::clearNom() {
 
 //retourne le nb de ligne
 template <class TYPE>
-int map<TYPE>::nbLine()const {
+int mapTab<TYPE>::nbLine()const {
 	return _nbLine;
 }
 
 //retourne le nb de colonne
 template <class TYPE>
-int map<TYPE>::nbCol()const {
+int mapTab<TYPE>::nbCol()const {
 	return _nbCol;
 }
 
 //retourne le nom de la map
 template <class TYPE>
-const char* map<TYPE>::getName()const {
+const char* mapTab<TYPE>::getName()const {
 	if (_name == nullptr)
 		return "/0";
 	return _name;
@@ -162,7 +162,7 @@ const char* map<TYPE>::getName()const {
 
 //resize la matrice avec nouv dims
 template <class TYPE>
-void map<TYPE>::resize(int nbLine, int nbCol) {
+void mapTab<TYPE>::resize(int nbLine, int nbCol) {
 	assert(nbLine >= 0 && nbCol >= 0);
 
 	//On quitte si le resize est de la même taille
@@ -199,7 +199,7 @@ void map<TYPE>::resize(int nbLine, int nbCol) {
 
 //retourne une référence à l’élément à la position i,j pour accéder ou modifier
 template <class TYPE>
-TYPE& map<TYPE>::at(int posI, int posJ)const {
+TYPE& mapTab<TYPE>::at(int posI, int posJ)const {
 	assert(posI >= 0 && posI < _nbLine);
 	assert(posJ >= 0 && posJ < _nbCol);
 	return *(*(_map + posI) + posJ);
@@ -207,7 +207,7 @@ TYPE& map<TYPE>::at(int posI, int posJ)const {
 
 //modifie le nom de la map
 template <class TYPE>
-void map<TYPE>::setName(const char* name) {
+void mapTab<TYPE>::setName(const char* name) {
 
 	int nbChar = strlen(name);
 	clearNom();
@@ -225,7 +225,7 @@ void map<TYPE>::setName(const char* name) {
 
 //print la matrice (sans le nom)
 template <class TYPE>
-void map<TYPE>::print(ostream& sortie)const {
+void mapTab<TYPE>::print(ostream& sortie)const {
 	for (int i = 0; i < _nbLine; i++) {
 		for (int j = 0; j < _nbCol; j++) {
 			sortie << *(*(_map + i) + j) << " ";
@@ -237,7 +237,7 @@ void map<TYPE>::print(ostream& sortie)const {
 
 //lit la matrice de la map ds le flux
 template <class TYPE>
-void map<TYPE>::read(istream& entree) {
+void mapTab<TYPE>::read(istream& entree) {
 	assert(_map != nullptr);
 	for (int i = 0; i < _nbLine; i++) {
 		for (int j = 0; j < _nbCol; j++) {
@@ -247,27 +247,27 @@ void map<TYPE>::read(istream& entree) {
 }
 
 
-//Opérateurs
+//Operator
 template <class TYPE>
-ostream& operator<<(ostream& sortie, const map<TYPE>& map) {
+ostream& operator<<(ostream& sortie, const mapTab<TYPE>& map) {
 	map.print(sortie);
 	return sortie;
 }
 
 template <class TYPE>
-istream& operator>> (istream& entree, map<TYPE>& x) {
+istream& operator>> (istream& entree, mapTab<TYPE>& x) {
 	map.read(entree);
 	return entree;
 }
 
 template <class TYPE>
-TYPE* map<TYPE>::operator[](int line) {
+TYPE* mapTab<TYPE>::operator[](int line) {
 	assert(line >= 0 && line < _nbline);
 	return *(_map + line);
 }
 
 template <class TYPE>
-const map<TYPE>& map<TYPE>::operator=(const map<TYPE>& carte) {
+const mapTab<TYPE>& mapTab<TYPE>::operator=(const mapTab<TYPE>& carte) {
 	if (this == &carte)
 		return *this;
 	clear();
