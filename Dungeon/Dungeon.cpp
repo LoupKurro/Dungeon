@@ -158,7 +158,6 @@ void Dungeon::findPath() {
 			}
 			return;
 		}
-		
 
 		for (int i = 0; i < 4; i++) {
 
@@ -261,7 +260,6 @@ Dungeon::node Dungeon::findParent(const node & c)
 		_itC++;
 	}
 }
-
 
 
 
