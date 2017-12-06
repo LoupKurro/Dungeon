@@ -129,7 +129,6 @@ void printMap(Dungeon& map, sf::RenderWindow& window) {
 				sHallway.setPosition(sf::Vector2f((i * 25), (j * 25)));
 				window.draw(sHallway);
 				break;
-
 			}
 		}
 	}
