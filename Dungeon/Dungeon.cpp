@@ -129,7 +129,6 @@ void Dungeon::createHallway()
 			if(at(toAdd.pos.getPosX(), toAdd.pos.getPosY()) != 'D')
 				at(toAdd.pos.getPosX(), toAdd.pos.getPosY()) = 'H';
 		}
-		print(cout);
 	}
 }
 
@@ -143,7 +142,6 @@ void Dungeon::findPath() {
 
 	do {
 		_itO = _openList.begin();
-		//_itC = _closeList.begin();
 		
 		current = *_itO;
 		_closeList.insert(_itC, current);
