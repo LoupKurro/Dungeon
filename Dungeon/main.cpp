@@ -14,7 +14,7 @@ void main()
 	test.createRooms();
 
 	//Creating the window
-	sf::RenderWindow window(sf::VideoMode(500, 500), "Dungeon Generator");
+	sf::RenderWindow window(sf::VideoMode(750, 750), "Dungeon Generator");
 	window.setVerticalSyncEnabled(true);
 
 	test.createHallway();
@@ -78,10 +78,12 @@ void printMap(Dungeon& map, sf::RenderWindow& window) {
 	sf::Texture tEmpty;
 	sf::Texture tWall;
 	sf::Texture tFloor;
+	sf::Texture tHallway;
 
 	sf::Sprite sEmpty;
 	sf::Sprite sWall;
 	sf::Sprite sFloor;
+	sf::Sprite sHallway;
 
 	
 
@@ -92,13 +94,21 @@ void printMap(Dungeon& map, sf::RenderWindow& window) {
 
 	if (!tWall.loadFromFile("TileSetTP3.png", sf::IntRect(25, 0, 25, 25)))
 		std::cout << "The Wall Texture wasn't loaded correctly" << endl;
-	else
+	else 
 		sWall.setTexture(tWall);
 
-	if (!tFloor.loadFromFile("TileSetTP3.png", sf::IntRect(0, 25, 25, 25)))
+
+	if (!tFloor.loadFromFile("TileSetTP3.png", sf::IntRect(25, 25, 25, 25)))
 		std::cout << "The Floor Texture wasn't loaded correctly" << endl;
-	else
+	else {
 		sFloor.setTexture(tFloor);
+		sFloor.setColor(sf::Color(165, 150, 150));
+	}
+
+	if (!tHallway.loadFromFile("TileSetTP3.png", sf::IntRect(0, 25, 25, 25)))
+		std::cout << "The Hallway Texture wasn't loaded correctly" << endl;
+	else
+		sHallway.setTexture(tHallway);
 
 	for (int i = 0; i < map.nbLine(); i++) {
 		for (int j = 0; j < map.nbCol(); j++) {
@@ -111,10 +121,15 @@ void printMap(Dungeon& map, sf::RenderWindow& window) {
 				sWall.setPosition(sf::Vector2f((i * 25), (j * 25)));
 				window.draw(sWall);
 				break;
-			case 'F': case 'D' : case 'H':
+			case 'F': case 'D' :
 				sFloor.setPosition(sf::Vector2f((i * 25), (j * 25)));
 				window.draw(sFloor);
 				break;
+			case 'H':
+				sHallway.setPosition(sf::Vector2f((i * 25), (j * 25)));
+				window.draw(sHallway);
+				break;
+
 			}
 		}
 	}

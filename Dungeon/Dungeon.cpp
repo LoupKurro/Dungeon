@@ -125,10 +125,12 @@ void Dungeon::createHallway()
 			_end = node(doors.front(), doors.front());
 			_start = closest(_finalPath);	//find the closest path to next door
 		}
+
 		doors.pop();
 		_start.calc(_end, _start);	//calculate distance, cost and score 
 		findPath();					// find a path 
 		addToFinalPath();			//add it to final path
+
 	}
 	addToMap();						//add final path to map
 }
