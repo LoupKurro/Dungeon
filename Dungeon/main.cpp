@@ -10,7 +10,7 @@ void main()
 	//Creating the map
 	Dungeon test;
 
-	test.init(15, 12, 12, 50, 50);
+	test.init(18, 12, 12, 50, 50);
 	test.createRooms();
 
 	//Creating the window
@@ -21,8 +21,9 @@ void main()
 
 
 	//Creating the View (Camera)
-	sf::View camera(sf::Vector2f(250, 250), sf::Vector2f(500, 500));
+	sf::View camera(sf::Vector2f(350, 350), sf::Vector2f(1500, 1500));
 	camera.setViewport(sf::FloatRect(0, 0, 1, 1));
+	camera.setCenter(750, 750);
 
 	//Link the view to the window
 	window.setView(camera);
@@ -47,23 +48,23 @@ void main()
 				{
 				case sf::Keyboard::Up:
 					std::cout << "The Up key was pressed" << endl;
-					camera.move(0, -25);
+					camera.move(10, -25);
 					window.setView(camera);
 					break;
 				case sf::Keyboard::Down:
 					std::cout << "The Down key was pressed" << endl;
-					camera.move(0, 25);
-					window.setView(camera);
+					camera.move(10, 25);
+					window.setView(camera);					
 					break;
 				case sf::Keyboard::Right:
 					std::cout << "The Right key was pressed" << endl;
-					camera.move(25, 0);
-					window.setView(camera);
+					camera.move(25, 10);
+					window.setView(camera);					
 					break;
 				case sf::Keyboard::Left:
 					std::cout << "The Left key was pressed" << endl;
-					camera.move(-25, 0);
-					window.setView(camera);
+					camera.move(-25, 10);
+					window.setView(camera);					
 					break;
 				}
 			}
