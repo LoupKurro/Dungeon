@@ -2,8 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include "Dungeon.h"
 #include "position.h"
+#include "character.h"
 
-void printMap(Dungeon& map, sf::RenderWindow& window);
+sf::Texture setVisualMap(Dungeon& map);
 
 void main()
 {
@@ -12,13 +13,21 @@ void main()
 
 	test.init(18, 12, 12, 50, 50);
 	test.createRooms();
+	test.createHallway();
+
+	//Creating character
+	character hero;
 
 	//Creating the window
 	sf::RenderWindow window(sf::VideoMode(750, 750), "Dungeon Generator");
 	window.setVerticalSyncEnabled(true);
 
-	test.createHallway();
-
+	//Creating Hero Sprite
+	sf::Texture tHero;
+	if (!tHero.loadFromFile("image.png"))
+		std::cout << "The Hero Texture wasn't loaded correctly" << endl;
+	sf::Sprite sHero(tHero);
+	
 
 	//Creating the View (Camera)
 	sf::View camera(sf::Vector2f(350, 350), sf::Vector2f(1500, 1500));
@@ -28,8 +37,14 @@ void main()
 	//Link the view to the window
 	window.setView(camera);
 
-	//Printing the map
-	printMap(test, window);
+	//Set the sprite of the map
+	sf::Texture rtMap (setVisualMap(test));
+	sf::Sprite sMap(rtMap);
+
+	//Show the map
+	window.draw(sMap);
+	window.display();
+
 	// Open the window and keep it open until we close it
 	while (window.isOpen())
 	{
@@ -44,37 +59,48 @@ void main()
 			// If a key is pressed
 			if (event.type == sf::Event::KeyPressed)
 			{
+				window.clear();
 				switch (event.key.code)
 				{
 				case sf::Keyboard::Up:
 					std::cout << "The Up key was pressed" << endl;
-					camera.move(10, -25);
-					window.setView(camera);
+					if (hero.moveUp) {
+						sHero.setPosition(sf::Vector2f((hero.getPosX * 25), (hero.getPosY * 25)));
+					}
 					break;
 				case sf::Keyboard::Down:
 					std::cout << "The Down key was pressed" << endl;
-					camera.move(10, 25);
-					window.setView(camera);					
+					if (hero.moveDown) {
+						sHero.setPosition(sf::Vector2f((hero.getPosX * 25), (hero.getPosY * 25)));
+					}
 					break;
 				case sf::Keyboard::Right:
 					std::cout << "The Right key was pressed" << endl;
-					camera.move(25, 10);
-					window.setView(camera);					
+					if (hero.moveRight) {
+						sHero.setPosition(sf::Vector2f((hero.getPosX * 25), (hero.getPosY * 25)));
+					}
 					break;
 				case sf::Keyboard::Left:
 					std::cout << "The Left key was pressed" << endl;
-					camera.move(-25, 10);
-					window.setView(camera);					
+					if (hero.moveLeft) {
+						sHero.setPosition(sf::Vector2f((hero.getPosX * 25), (hero.getPosY * 25)));
+					}
 					break;
 				}
+				window.draw(sHero);
+				window.draw(sMap);
+				window.display();
 			}
-
 		}
-
 	}
 }
 
-void printMap(Dungeon& map, sf::RenderWindow& window) {
+sf::Texture setVisualMap(Dungeon& map) {
+	sf::RenderTexture tMap;
+	if (!tMap.create(1500, 1500))
+		std::cout << "The Map Render Texture wasn't created correctly" << endl;
+
+
 	sf::Texture tEmpty;
 	sf::Texture tWall;
 	sf::Texture tFloor;
@@ -110,28 +136,31 @@ void printMap(Dungeon& map, sf::RenderWindow& window) {
 	else
 		sHallway.setTexture(tHallway);
 
+	tMap.clear();
+
 	for (int i = 0; i < map.nbLine(); i++) {
 		for (int j = 0; j < map.nbCol(); j++) {
 			switch (map.at(i, j)) {
 			case 'E':
 				sEmpty.setPosition(sf::Vector2f((i*25), (j * 25)));
-				window.draw(sEmpty);
+				tMap.draw(sEmpty);
 				break;
 			case 'W':
 				sWall.setPosition(sf::Vector2f((i * 25), (j * 25)));
-				window.draw(sWall);
+				tMap.draw(sWall);
 				break;
 			case 'F': case 'D' :
 				sFloor.setPosition(sf::Vector2f((i * 25), (j * 25)));
-				window.draw(sFloor);
+				tMap.draw(sFloor);
 				break;
 			case 'H':
 				sHallway.setPosition(sf::Vector2f((i * 25), (j * 25)));
-				window.draw(sHallway);
+				tMap.draw(sHallway);
 				break;
 
 			}
 		}
 	}
-	window.display();
+
+	return  tMap.getTexture();
 }
