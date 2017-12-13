@@ -304,3 +304,13 @@ Dungeon::node Dungeon::closest(list<node> &l)
 	}
 	return closest;
 }
+
+//Return the last door X
+int Dungeon::getLastDoorX()const {
+	return _end.pos.getPosX();
+}
+
+//Return the last door Y
+int Dungeon::getLastDoorY()const {
+	return _end.pos.getPosY();
+}

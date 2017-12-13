@@ -91,8 +91,6 @@ public:
 	void addToMap();				//add final path to map
 	node closest(list<node> &l);	//find closest path to a node
 
-
-
-
-
+	int getLastDoorX()const;			//Return the last door X
+	int getLastDoorY()const;			//Return the last door Y
 };
