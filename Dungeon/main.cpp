@@ -10,7 +10,7 @@ void main()
 	//Creating the map
 	Dungeon test;
 
-	test.init(18, 12, 12, 50, 50);
+	test.init(25, 15, 15, 50, 50);
 	test.createRooms();
 	test.createHallway();
 

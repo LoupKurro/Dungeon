@@ -54,6 +54,7 @@ private:
 			int yDist = abs(pos.getPosY() - e.pos.getPosY());
 
 			distance = (xDist + yDist); // manhatthan
+
 			cost = c.cost + 1;
 			score = distance + cost;
 		}
