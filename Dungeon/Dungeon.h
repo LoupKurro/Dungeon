@@ -53,8 +53,8 @@ private:
 			int xDist = abs(pos.getPosX() - e.pos.getPosX());
 			int yDist = abs(pos.getPosY() - e.pos.getPosY());
 
-			distance = (xDist + yDist); // manhathan
-			//distance = ((xDist*xDist) + (yDist*yDist)); //Euclidien
+			distance = (xDist + yDist); // manhatthan
+
 			cost = c.cost + 1;
 			score = distance + cost;
 		}
@@ -92,8 +92,6 @@ public:
 	void addToMap();				//add final path to map
 	node closest(list<node> &l);	//find closest path to a node
 
-
-
-
-
+	int getLastDoorX()const;			//Return the last door X
+	int getLastDoorY()const;			//Return the last door Y
 };

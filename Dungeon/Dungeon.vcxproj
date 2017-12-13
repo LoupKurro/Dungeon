@@ -111,15 +111,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="character.cpp" />
     <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="position.cpp" />
+    <ClCompile Include="windowMap.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="character.h" />
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="list.hpp" />
     <ClInclude Include="mapTab.h" />
     <ClInclude Include="position.h" />
+    <ClInclude Include="windowMap.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

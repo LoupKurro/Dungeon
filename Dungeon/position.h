@@ -13,7 +13,7 @@ using namespace std;
 
 class position
 {
-private:
+protected:
 	int _posX;
 	int _posY;
 	char _direction;
