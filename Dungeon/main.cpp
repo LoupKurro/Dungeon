@@ -1,8 +1,4 @@
 #include <iostream>
-#include <SFML/Graphics.hpp>
-#include "Dungeon.h"
-#include "position.h"
-#include "character.h"
 #include "windowMap.h"
 
 void main()
