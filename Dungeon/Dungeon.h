@@ -54,7 +54,7 @@ private:
 			int yDist = abs(pos.getPosY() - e.pos.getPosY());
 
 			distance = (xDist + yDist); // manhathan
-			distance = ((xDist*xDist) + (yDist*yDist)); //Euclidien
+			//distance = ((xDist*xDist) + (yDist*yDist)); //Euclidien
 			cost = c.cost + 1;
 			score = distance + cost;
 		}
