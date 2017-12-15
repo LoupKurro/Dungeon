@@ -24,6 +24,10 @@
     <ClCompile Include="Dungeon.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
+    <ClCompile Include="newGame.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="gameMenu.cpp">
     <ClCompile Include="character.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
@@ -44,6 +48,10 @@
     <ClInclude Include="list.hpp">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
+    <ClInclude Include="newGame.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="gameMenu.h">
     <ClInclude Include="character.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>

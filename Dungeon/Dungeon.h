@@ -53,7 +53,7 @@ private:
 			int xDist = abs(pos.getPosX() - e.pos.getPosX());
 			int yDist = abs(pos.getPosY() - e.pos.getPosY());
 
-			distance = (xDist + yDist); // manhatthan
+			distance = (xDist + yDist); // manhattan  distance
 
 			cost = c.cost + 1;
 			score = distance + cost;
