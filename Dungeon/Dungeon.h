@@ -54,6 +54,7 @@ private:
 			int yDist = abs(pos.getPosY() - e.pos.getPosY());
 
 			distance = (xDist + yDist); // manhattan  distance
+
 			cost = c.cost + 1;
 			score = distance + cost;
 		}
@@ -91,8 +92,6 @@ public:
 	void addToMap();				//add final path to map
 	node closest(list<node> &l);	//find closest path to a node
 
-
-
-
-
+	int getLastDoorX()const;			//Return the last door X
+	int getLastDoorY()const;			//Return the last door Y
 };
