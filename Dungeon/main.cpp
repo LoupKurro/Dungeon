@@ -2,11 +2,31 @@
 #include <SFML/Graphics.hpp>
 #include "Dungeon.h"
 #include "position.h"
+#include "gameMenu.h"
 
 void printMap(Dungeon& map, sf::RenderWindow& window);
 
 void main()
 {
+
+	gameMenu testMenu;
+	switch (testMenu.init())
+	{
+	case 0:
+
+		break;
+	case 1:
+
+		break;
+
+	case 2:
+		
+	default:
+		break;
+	}
+	testMenu.init();
+
+	cout << "Ca marche";
 	//Creating the map
 	Dungeon test;
 
