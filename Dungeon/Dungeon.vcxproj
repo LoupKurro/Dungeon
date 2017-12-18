@@ -117,6 +117,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="newGame.cpp" />
     <ClCompile Include="position.cpp" />
+    <ClCompile Include="sqlConnect.cpp" />
     <ClCompile Include="windowMap.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -127,6 +128,7 @@
     <ClInclude Include="mapTab.h" />
     <ClInclude Include="newGame.h" />
     <ClInclude Include="position.h" />
+    <ClInclude Include="sqlConnect.h" />
     <ClInclude Include="windowMap.h" />
   </ItemGroup>
   <ItemGroup>

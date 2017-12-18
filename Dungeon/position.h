@@ -6,6 +6,7 @@ Goal : Object keeping a position and a direction
 **********************************************************/
 
 #pragma once
+
 #include <assert.h>
 #include <istream>
 #include <iostream>

@@ -4,18 +4,24 @@
 #include "position.h"
 #include "gameMenu.h"
 #include "windowMap.h"
+#include "sqlConnect.h"
 
 void main()
 {
 	gameMenu menu;
+	sqlConnect sql;
+
+	sql.connexion();
 	
 	if (menu.name()) {
 		sf::String playerName;
 		menu.getName(playerName);
 		string name = playerName;
 		cout << name;
-		//recherche des infos sur le joueur
 
+		//recherche des infos sur le joueur
+			
+		int nbGameToLoad;
 		sf::String gameToLoad = "";
 		int choice = 1;		
 		

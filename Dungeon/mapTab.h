@@ -6,6 +6,7 @@ But: Créer une carte dynamique en utilisant un pointeur de pointeur
 *****************************************************************************************************************************************************/
 
 #pragma once
+
 #include <cassert>
 #include <iostream>
 using namespace std;
@@ -14,9 +15,9 @@ template <class TYPE>
 class mapTab
 {
 protected:
-	char *_name;			//pointeur sur le nom de la map
-	TYPE  **_map;	//La map dynamique en ligne et colonne
-	int	_nbLine, 		//nombre de ligne pour la matrice
+	char *_name;	//pointeur sur le nom de la map
+	TYPE **_map;	//La map dynamique en ligne et colonne
+	int	_nbLine,	//nombre de ligne pour la matrice
 		_nbCol;		//nombre de colonne pour la matrice
 public:
 	//Constructeurs/Destructeurs
@@ -26,13 +27,13 @@ public:
 	~mapTab();
 
 	//Clears
-	void clear();	//Apelle clearMartice() et clearNom()
-	void clearMatrice();		//Vide le contenu de la carte
+	void clear();		//Apelle clearMatrice() et clearNom()
+	void clearMatrice();	//Vide le contenu de la carte
 	void clearNom();		//Vide le contenu du nom de la carte
 
 	//getteurs / setteurs
-	int nbLine()const; 			//retourne le nb de ligne
-	int nbCol()const; 			//retourne le nb de colonne
+	int nbLine()const; 				//retourne le nb de ligne
+	int nbCol()const; 				//retourne le nb de colonne
 	const char* getName()const; 	  	//retourne le nom de la map
 	void resize(int nbLine, int nbCol);//resize la matrice avec nouv dims
 	TYPE& at(int posI, int posJ)const;	//retourne une référence à l’élément 

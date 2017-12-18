@@ -9,7 +9,6 @@ private:
 	sf::RenderWindow _menuWindow;
 	sf::Text _title;
 	sf::Font font;
-
 	sf::Text _name;
 	
 public:

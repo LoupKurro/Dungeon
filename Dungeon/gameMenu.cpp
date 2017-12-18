@@ -107,7 +107,7 @@ int gameMenu::mainMenu()
 	button[2].setCharacterSize(40);
 	button[2].setPosition(220, 420);
 
-	int nbSavedGame = 0;
+	int nbSavedGame = 10;
 	int choice = 0;
 
 	if (nbSavedGame == 0)
