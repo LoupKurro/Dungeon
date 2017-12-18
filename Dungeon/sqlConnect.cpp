@@ -70,7 +70,7 @@ void sqlConnect::deconnexion()
 	SQLFreeHandle(SQL_HANDLE_ENV, sqlEnvHandle);
 }
 
-void sqlConnect::ajouteUsager(char *nom, char *prenom) {
+void sqlConnect::ajouteUsager(char *nom) {
 
 	try
 	{
@@ -91,10 +91,10 @@ void sqlConnect::ajouteUsager(char *nom, char *prenom) {
 		- Longueur du buffer
 		- Pointeur du buffer
 		*/
-		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 50, 0, nom, 0, 0);
-		retcode = SQLBindParameter(sqlStmtHandle, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 50, 0, nom, 0, 0);
+		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 100, 0, nom, 0, 0);
+		//retcode = SQLBindParameter(sqlStmtHandle, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 50, 0, nom, 0, 0);
 
-		retcode = SQLPrepare(sqlStmtHandle, (SQLCHAR*)"INSERT INTO Usager (usagerprenom, usagernom) VALUES (?, ?)", SQL_NTS);
+		retcode = SQLPrepare(sqlStmtHandle, (SQLCHAR*)"INSERT INTO tblPlayer (name_player) VALUES (?)", SQL_NTS);
 
 		retcode = SQLExecute(sqlStmtHandle);
 

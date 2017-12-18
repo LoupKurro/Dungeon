@@ -16,8 +16,10 @@ void main()
 	if (menu.name()) {
 		sf::String playerName;
 		menu.getName(playerName);
-		string name = playerName;
+		string pName = playerName;
+		char *name =(char*)pName.c_str();
 		cout << name;
+
 
 		//recherche des infos sur le joueur
 			
