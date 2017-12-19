@@ -1,3 +1,10 @@
+/**********************************************************
+Creator : Loup Olivier Gaven-Forest & Marie-Noelle Dussault
+Date : December 18th 2017
+File : gameMenu.cpp
+Goal : Manage and display Menus
+**********************************************************/
+
 #include "gameMenu.h"
 #include <iostream>
 
@@ -249,8 +256,6 @@ sf::String gameMenu::loadMenu()
 		loadWindow.display();
 	}
 }
-
-
 
 void gameMenu::drawMenu(sf::RenderWindow &w, sf::Text t[], int size)
 {
