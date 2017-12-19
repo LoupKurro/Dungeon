@@ -1,3 +1,5 @@
+#include "stdafx.h"
+
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Dungeon.h"
@@ -42,6 +44,4 @@ void main()
 		}
 	}	
 }
-
-
 
