@@ -2,21 +2,22 @@
 
 #include "SFML\Graphics.hpp"
 #include <iostream>
+#include <string>
 
 class gameMenu {
 private:
 	sf::RenderWindow _menuWindow;
 	sf::Text _title;
-	sf::Text button[3];
 	sf::Font font;
-
 	sf::Text _name;
 	
 public:
-	int init();
-	void drawMenu(sf::RenderWindow &window);
-
-
+	bool name();
+	int mainMenu();
+	sf::String loadMenu();
+	
+	void drawMenu(sf::RenderWindow &w, sf::Text t[], int size);
+	void getName(sf::String &n);
 };
 
 

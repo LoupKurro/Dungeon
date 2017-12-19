@@ -4,6 +4,7 @@ Date : December 13th 2017
 File : windowMap.h
 Goal : Object controlling the visual of the map window
 **********************************************************/
+
 #include "windowMap.h"
 
 //Constructor
