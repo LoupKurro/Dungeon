@@ -7,6 +7,7 @@
 #include "gameMenu.h"
 #include "windowMap.h"
 #include "sqlConnect.h"
+#include "mapInfo.h"
 
 void main()
 {

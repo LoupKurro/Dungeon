@@ -227,54 +227,6 @@ int sqlConnect::nextMapId()
 		cout << e << "\n";
 		deconnexion();
 	}
-
-	deconnexion();
-
-
-
-
-
-
-
-	try
-	{
-		connexion();
-
-		SQLRETURN retcode;
-
-		/*
-		Paramètre SQLBindParameter:
-		- Handler de la requête
-		- No du paramètre (commence à 1)
-		- Est-ce un paramètre de type Input ou Output
-		- Quel est le type de la variable en C++
-		- Quel est le type de la variable en SQL
-		- Quelle est la taille de la colonne dans la BD
-		- Nombre de décimal
-		- Quelle variable ou données (pointeur)
-		- Longueur du buffer
-		- Pointeur du buffer
-		*/
-		//retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 100, 0, nom, 0, 0);
-
-		retcode = SQLPrepare(sqlStmtHandle, (SQLCHAR*)"SELECT MAX(id_map) FROM tblMap", SQL_NTS);
-
-		retcode = SQLExecute(sqlStmtHandle);
-
-		if (SQL_SUCCESS != retcode) {
-			throw string("Erreur dans la requête");
-		}
-	}
-	catch (string const& e)
-	{
-		cout << e << "\n";
-
-		deconnexion();
-
-		getchar();
-		exit(1);
-	}
-
 	deconnexion();
 }
 
