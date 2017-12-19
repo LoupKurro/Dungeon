@@ -40,7 +40,9 @@ public:
 	windowMap();	//Constructor
 	void reset();	//Set back to the default parameters
 	void createMap(int nbRoom, int xRoom, int yRoom, int xMap, int yMap);	//Create the map
-	void init();	//Initialise the visual with the created map
+	void init();	//Initialise the visual with the created map				
+	void visualInit();	//Inititalise the visuals
 	void eventHandle(int id, mapInfo& information);  //Handle the events link to the map
 	mapInfo save(int id);		//Save the map and return the informations of the map for the database
+	void load(mapInfo& information);		//Load the map as the informations of the map from the database
 };
