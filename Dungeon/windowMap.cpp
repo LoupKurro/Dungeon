@@ -224,8 +224,8 @@ void windowMap::load(mapInfo& information)
 	_map.read(fin);
 	fin.close();
 
-	_hero.setPosX = information.player.getPosX;
-	_hero.setPosY = information.player.getPosY;
+	_hero.setPosX(information.player.getPosX());
+	_hero.setPosY(information.player.getPosY());
 
 	visualInit();
 }
