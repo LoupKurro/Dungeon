@@ -125,6 +125,7 @@
     <ClInclude Include="Dungeon.h" />
     <ClInclude Include="gameMenu.h" />
     <ClInclude Include="list.hpp" />
+    <ClInclude Include="mapInfo.h" />
     <ClInclude Include="mapTab.h" />
     <ClInclude Include="newGame.h" />
     <ClInclude Include="position.h" />

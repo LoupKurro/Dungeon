@@ -1,3 +1,5 @@
+#include "stdafx.h"
+
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include "Dungeon.h"
@@ -10,8 +12,6 @@ void main()
 {
 	gameMenu menu;
 	sqlConnect sql;
-
-	sql.connexion();
 	
 	if (menu.name()) {
 		sf::String playerName;
@@ -44,6 +44,4 @@ void main()
 		}
 	}	
 }
-
-
 
