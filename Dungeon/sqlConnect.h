@@ -26,6 +26,9 @@ public:
 	
 	void connexion();
 	void deconnexion();
+	
 	void ajouteUsager(char *nom);
+	int nbMap(char *nom);
+	void ajouterMap(char *nom);
 };
 

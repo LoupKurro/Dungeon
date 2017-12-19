@@ -13,7 +13,7 @@ private:
 	
 public:
 	bool name();
-	int mainMenu();
+	int mainMenu(int nbMap);
 	sf::String loadMenu();
 	
 	void drawMenu(sf::RenderWindow &w, sf::Text t[], int size);

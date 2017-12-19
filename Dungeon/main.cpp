@@ -20,17 +20,19 @@ void main()
 		menu.getName(playerName);
 		string pName = playerName;
 		char *name =(char*)pName.c_str();
-		cout << name;
-
+		cout << name << endl;
+		
 
 		//recherche des infos sur le joueur
 			
-		int nbGameToLoad;
+		int nbMap = sql.nbMap(name);
+		cout << nbMap << endl;
+
 		sf::String gameToLoad = "";
 		int choice = 1;		
 		
 		while (choice == 1 && gameToLoad == "") {
-			choice = menu.mainMenu();
+			choice = menu.mainMenu(nbMap);
 			if (choice == 1)
 				gameToLoad = menu.loadMenu();
 		}

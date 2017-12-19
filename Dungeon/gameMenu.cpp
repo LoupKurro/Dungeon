@@ -77,7 +77,7 @@ bool gameMenu::name()
 }
 
 
-int gameMenu::mainMenu()
+int gameMenu::mainMenu(int nbMap)
 {
 	_menuWindow.create(sf::VideoMode(500, 500), "Dungeon - Menu");
 	font.loadFromFile("DUNGRG.TTF");
@@ -107,10 +107,9 @@ int gameMenu::mainMenu()
 	button[2].setCharacterSize(40);
 	button[2].setPosition(220, 420);
 
-	int nbSavedGame = 10;
 	int choice = 0;
 
-	if (nbSavedGame == 0)
+	if (nbMap == 0)
 		button[1].setFillColor(sf::Color::Black);
 
 	while (_menuWindow.isOpen()) {					// Is the window still opened?
