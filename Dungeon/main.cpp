@@ -12,8 +12,6 @@ void main()
 {
 	gameMenu menu;
 	sqlConnect sql;
-
-	sql.connexion();
 	
 	if (menu.name()) {
 		sf::String playerName;
