@@ -9,7 +9,6 @@ void sqlConnect::connexion()
 		sqlConnHandle = NULL;
 		sqlStmtHandle = NULL;
 
-
 		try
 		{
 			//Allocations
@@ -20,7 +19,7 @@ void sqlConnect::connexion()
 
 				//Connexion au SQL Server
 				switch (SQLDriverConnect(sqlConnHandle, NULL,
-					(SQLCHAR*)"DRIVER={SQL Server};SERVER=localhost, 1433;DATABASE=DungeonGenerator;UID=dungeon;PWD=123gen;", SQL_NTS, retconstring, 1024, NULL, SQL_DRIVER_NOPROMPT)) {
+					(SQLCHAR*)"DRIVER={SQL Server};SERVER=localhost, 1433;DATABASE=DungeonGenerator;UID=sa;PWD==user123;", SQL_NTS, retconstring, 1024, NULL, SQL_DRIVER_NOPROMPT)) {
 
 				case SQL_SUCCESS:
 					cout << "Connexion reussi";
@@ -70,6 +69,7 @@ void sqlConnect::deconnexion()
 	SQLFreeHandle(SQL_HANDLE_ENV, sqlEnvHandle);
 }
 
+
 void sqlConnect::ajouteUsager(char *nom) {
 
 	try
@@ -92,7 +92,6 @@ void sqlConnect::ajouteUsager(char *nom) {
 		- Pointeur du buffer
 		*/
 		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 100, 0, nom, 0, 0);
-		//retcode = SQLBindParameter(sqlStmtHandle, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 50, 0, nom, 0, 0);
 
 		retcode = SQLPrepare(sqlStmtHandle, (SQLCHAR*)"INSERT INTO tblPlayer (name_player) VALUES (?)", SQL_NTS);
 
@@ -113,5 +112,66 @@ void sqlConnect::ajouteUsager(char *nom) {
 	}
 
 	deconnexion();
+}
+
+int sqlConnect::nbMap(char * nom)
+{
+
+	try
+	{
+		connexion();
+
+		//S'il y a un problème avec la requête on quitte l'application sinon on affiche le résultat
+		if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLCHAR*)"SELECT dbo.nbMap('Marcel')", SQL_NTS)) {
+			throw string("Erreur dans la requête");
+		}
+		else {
+			//Déclarer les variables d'affichage
+
+			SQLCHAR nbMap[SQL_RESULT_LEN];
+			SQLINTEGER ptrnbMap;
+
+			while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS) {
+				SQLGetData(sqlStmtHandle, 1, SQL_CHAR, nbMap, SQL_RESULT_LEN, &ptrnbMap);
+				
+
+				//Afficher le résultat d'une requête			
+				cout << nom << "  " << nbMap << endl;
+			}
+		}
+	}
+	catch (string const& e)
+	{
+		cout << e << "\n";
+		deconnexion();
+	}
+
+	deconnexion();
+
+
+	//SQLHDBC     hDbc = NULL;
+	//
+	//SQLINTEGER  nbMap;
+	//PBYTE       pPicture;
+	//SQLINTEGER  pIndicators[2];
+
+	//	// Get a statement handle and execute a command.  
+	//	SQLAllocHandle(SQL_HANDLE_STMT, hDbc, &sqlStmtHandle);
+
+	//if (SQLExecDirect(sqlStmtHandle,(SQLCHAR*) "SELECT dbo.nbMap('Marcel')", SQL_NTS) != SQL_SUCCESS)
+	//{
+	//	cout << "erreur" << endl;// Handle error and return.  
+	//}
+
+	//// Retrieve data from row set.  
+	//SQLBindCol(sqlStmtHandle, 1, SQL_INTEGER, (SQLPOINTER)&nbMap, sizeof(long),
+	//	&pIndicators[0]);
+
+	//while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS)
+	//{
+	//	cout << nbMap << "\n";
+	//
+	//}
+	//return nbMap;
 }
 
