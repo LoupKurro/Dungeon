@@ -115,6 +115,7 @@
     <ClCompile Include="Dungeon.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="position.cpp" />
+    <ClCompile Include="stdafx.cpp" />
     <ClCompile Include="windowMap.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -123,6 +124,8 @@
     <ClInclude Include="list.hpp" />
     <ClInclude Include="mapTab.h" />
     <ClInclude Include="position.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
     <ClInclude Include="windowMap.h" />
   </ItemGroup>
   <ItemGroup>
