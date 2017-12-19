@@ -190,7 +190,7 @@ void windowMap::eventHandle(int id, mapInfo& information) {
 mapInfo windowMap::save(int id)
 {
 	string finDeFichier = ".txt";
-	string nomFichier = "./Maps/" + id + finDeFichier;
+	string nomFichier = "./Maps/" +to_string(id) + finDeFichier;
 	ofstream fout;
 
 	fout.open(nomFichier.c_str());
