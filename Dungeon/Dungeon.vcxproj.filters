@@ -20,6 +20,7 @@
     <ClInclude Include="position.h" />
     <ClInclude Include="windowMap.h" />
     <ClInclude Include="sqlConnect.h" />
+    <ClInclude Include="mapInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
