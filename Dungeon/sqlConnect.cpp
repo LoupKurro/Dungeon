@@ -147,31 +147,5 @@ int sqlConnect::nbMap(char * nom)
 	}
 
 	deconnexion();
-
-
-	//SQLHDBC     hDbc = NULL;
-	//
-	//SQLINTEGER  nbMap;
-	//PBYTE       pPicture;
-	//SQLINTEGER  pIndicators[2];
-
-	//	// Get a statement handle and execute a command.  
-	//	SQLAllocHandle(SQL_HANDLE_STMT, hDbc, &sqlStmtHandle);
-
-	//if (SQLExecDirect(sqlStmtHandle,(SQLCHAR*) "SELECT dbo.nbMap('Marcel')", SQL_NTS) != SQL_SUCCESS)
-	//{
-	//	cout << "erreur" << endl;// Handle error and return.  
-	//}
-
-	//// Retrieve data from row set.  
-	//SQLBindCol(sqlStmtHandle, 1, SQL_INTEGER, (SQLPOINTER)&nbMap, sizeof(long),
-	//	&pIndicators[0]);
-
-	//while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS)
-	//{
-	//	cout << nbMap << "\n";
-	//
-	//}
-	//return nbMap;
 }
 

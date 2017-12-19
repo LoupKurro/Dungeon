@@ -2,15 +2,18 @@
 Creator : Loup Olivier Gaven-Forest & Marie-Noelle Dussault
 Date : December 13th 2017
 File : windowMap.h
-Goal : Object controlling the visual of the map window
+Goal : Object controlling the visual and the events of the map window
 **********************************************************/
 
 #pragma once
 #include <iostream>
+#include <fstream>
+#include <string>
 #include <SFML/Graphics.hpp>
 #include "Dungeon.h"
 #include "position.h"
 #include "character.h"
+#include "mapInfo.h"
 
 class windowMap
 {
@@ -38,5 +41,6 @@ public:
 	void reset();	//Set back to the default parameters
 	void createMap(int nbRoom, int xRoom, int yRoom, int xMap, int yMap);	//Create the map
 	void init();	//Initialise the visual with the created map
-	void eventHandle();  //Handle the events link to the map
+	void eventHandle(int id, mapInfo& information);  //Handle the events link to the map
+	mapInfo save(int id);		//Save the map and return the informations of the map for the database
 };

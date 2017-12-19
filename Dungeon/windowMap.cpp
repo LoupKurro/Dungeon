@@ -2,7 +2,7 @@
 Creator : Loup Olivier Gaven-Forest & Marie-Noelle Dussault
 Date : December 13th 2017
 File : windowMap.h
-Goal : Object controlling the visual of the map window
+Goal : Object controlling the visual and the events of the map window
 **********************************************************/
 
 #include "windowMap.h"
@@ -134,7 +134,7 @@ void windowMap::setVisualMap()
 }
 
 //Handle the events link to the map
-void windowMap::eventHandle() {
+void windowMap::eventHandle(int id, mapInfo& information) {
 	// Open the window and keep it open until we close it
 	while (_window.isOpen())
 	{
@@ -144,7 +144,11 @@ void windowMap::eventHandle() {
 		{
 			// If the event is close, we close the window
 			if (event.type == sf::Event::Closed)
+			{
+				information = save(id);
 				_window.close();
+			}
+
 
 			// If a key is pressed
 			if (event.type == sf::Event::KeyPressed)
@@ -180,4 +184,24 @@ void windowMap::eventHandle() {
 			}
 		}
 	}
+}
+
+//Save the map and return the informations of the map for the database
+mapInfo windowMap::save(int id)
+{
+	string finDeFichier = ".txt";
+	string nomFichier = "./Maps/" + id + finDeFichier;
+	ofstream fout;
+
+	fout.open(nomFichier.c_str());
+	_map.print(fout);
+	fout.close();
+
+	mapInfo information;
+	information.linkMap = nomFichier;
+	information.player = _hero;
+	information.dimX = _map.nbLine();
+	information.dimY = _map.nbCol();
+
+	return information;
 }
