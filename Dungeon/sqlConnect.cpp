@@ -1,6 +1,11 @@
+/**********************************************************
+Creator : Loup Olivier Gaven-Forest & Marie-Noelle Dussault
+Date : December 18th 2017
+File : sqlConnect.cpp
+Goal : Object controlling databsse connection
+**********************************************************/
+
 #include "sqlConnect.h"
-
-
 
 void sqlConnect::connexion()
 {
@@ -133,7 +138,7 @@ int sqlConnect::nbMap(char * nom)
 
 			while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS) {
 				SQLGetData(sqlStmtHandle, 1, SQL_CHAR, nbMap, SQL_RESULT_LEN, &ptrnbMap);
-				
+
 
 				//Afficher le résultat d'une requête			
 				cout << nom << "  " << nbMap << endl;
@@ -147,31 +152,129 @@ int sqlConnect::nbMap(char * nom)
 	}
 
 	deconnexion();
+}
+
+void sqlConnect::ajouterMap(char * nom)
+{
+	try
+	{
+		connexion();
+
+		SQLRETURN retcode;
+
+		/*
+		Paramètre SQLBindParameter:
+		- Handler de la requête
+		- No du paramètre (commence à 1)
+		- Est-ce un paramètre de type Input ou Output
+		- Quel est le type de la variable en C++
+		- Quel est le type de la variable en SQL
+		- Quelle est la taille de la colonne dans la BD
+		- Nombre de décimal
+		- Quelle variable ou données (pointeur)
+		- Longueur du buffer
+		- Pointeur du buffer
+		*/
+		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 100, 0, nom, 0, 0);
+
+		retcode = SQLPrepare(sqlStmtHandle, (SQLCHAR*)"INSERT INTO tblPlayer (name_player) VALUES (?)", SQL_NTS);
+
+		retcode = SQLExecute(sqlStmtHandle);
+
+		if (SQL_SUCCESS != retcode) {
+			throw string("Erreur dans la requête");
+		}
+	}
+	catch (string const& e)
+	{
+		cout << e << "\n";
+
+		deconnexion();
+
+		getchar();
+		exit(1);
+	}
+
+	deconnexion();
 
 
-	//SQLHDBC     hDbc = NULL;
-	//
-	//SQLINTEGER  nbMap;
-	//PBYTE       pPicture;
-	//SQLINTEGER  pIndicators[2];
 
-	//	// Get a statement handle and execute a command.  
-	//	SQLAllocHandle(SQL_HANDLE_STMT, hDbc, &sqlStmtHandle);
+}
 
-	//if (SQLExecDirect(sqlStmtHandle,(SQLCHAR*) "SELECT dbo.nbMap('Marcel')", SQL_NTS) != SQL_SUCCESS)
-	//{
-	//	cout << "erreur" << endl;// Handle error and return.  
-	//}
+int sqlConnect::nextMapId()
+{
+	try
+	{
+		connexion();
 
-	//// Retrieve data from row set.  
-	//SQLBindCol(sqlStmtHandle, 1, SQL_INTEGER, (SQLPOINTER)&nbMap, sizeof(long),
-	//	&pIndicators[0]);
+		//S'il y a un problème avec la requête on quitte l'application sinon on affiche le résultat
+		if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLCHAR*)"SELECT MAX(id_map) FROM tblMap", SQL_NTS)) {
+			throw string("Erreur dans la requête");
+		}
+		else {
+			//Déclarer les variables d'affichage
 
-	//while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS)
-	//{
-	//	cout << nbMap << "\n";
-	//
-	//}
-	//return nbMap;
+			SQLINTEGER nextId[SQL_RESULT_LEN];
+			SQLINTEGER ptrNextId;
+
+			while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS) {
+				SQLGetData(sqlStmtHandle, 1, SQL_CHAR, nextId, SQL_RESULT_LEN, &ptrNextId);
+			}
+		}
+	}
+	catch (string const& e)
+	{
+		cout << e << "\n";
+		deconnexion();
+	}
+
+	deconnexion();
+
+
+
+
+
+
+
+	try
+	{
+		connexion();
+
+		SQLRETURN retcode;
+
+		/*
+		Paramètre SQLBindParameter:
+		- Handler de la requête
+		- No du paramètre (commence à 1)
+		- Est-ce un paramètre de type Input ou Output
+		- Quel est le type de la variable en C++
+		- Quel est le type de la variable en SQL
+		- Quelle est la taille de la colonne dans la BD
+		- Nombre de décimal
+		- Quelle variable ou données (pointeur)
+		- Longueur du buffer
+		- Pointeur du buffer
+		*/
+		//retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 100, 0, nom, 0, 0);
+
+		retcode = SQLPrepare(sqlStmtHandle, (SQLCHAR*)"SELECT MAX(id_map) FROM tblMap", SQL_NTS);
+
+		retcode = SQLExecute(sqlStmtHandle);
+
+		if (SQL_SUCCESS != retcode) {
+			throw string("Erreur dans la requête");
+		}
+	}
+	catch (string const& e)
+	{
+		cout << e << "\n";
+
+		deconnexion();
+
+		getchar();
+		exit(1);
+	}
+
+	deconnexion();
 }
 

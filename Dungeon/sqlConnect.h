@@ -1,3 +1,11 @@
+/**********************************************************
+Creator : Loup Olivier Gaven-Forest & Marie-Noelle Dussault
+Date : December 18th 2017
+File : sqlConnect.h
+Goal : Object controlling databsse connection
+**********************************************************/
+
+
 #pragma once
 
 #include <iostream>
@@ -30,5 +38,7 @@ public:
 	void ajouteUsager(char *nom);
 	int nbMap(char *nom);
 	void ajouterMap(char *nom);
+
+	int nextMapId();
 };
 
