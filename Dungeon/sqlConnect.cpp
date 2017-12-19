@@ -188,11 +188,7 @@ void sqlConnect::ajouterMap(char * nom, mapInfo info)
 		getchar();
 		exit(1);
 	}
-
 	deconnexion();
-
-
-
 }
 
 int sqlConnect::nextMapId()

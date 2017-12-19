@@ -48,7 +48,7 @@ void main()
 			window.createMap(20, 15, 15, 75, 75);
 			window.init();
 			window.eventHandle(nextId, info);
-			sql.ajouterMap(name, info)
+			sql.ajouterMap(name, info);
 
 
 		}
