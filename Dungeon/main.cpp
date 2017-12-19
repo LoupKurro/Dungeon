@@ -13,12 +13,14 @@ void main()
 {
 	gameMenu menu;
 	sqlConnect sql;
+	sf::String playerName;
 	
+	mapInfo info;
+
 	if (menu.name()) {
-		sf::String playerName;
-		string pName = playerName;
-		mapInfo info;
+		
 		menu.getName(playerName);
+		string pName = playerName;
 		char *name =(char*)pName.c_str();
 		cout << name << endl;
 		
@@ -39,11 +41,15 @@ void main()
 
 		if (choice == 0)
 		{
+			if (nbMap == 0)
+				sql.ajouteUsager(name);
+
 			windowMap window;
 			window.createMap(20, 15, 15, 75, 75);
 			window.init();
 			window.eventHandle(nextId, info);
-			
+			sql.ajouterMap(name, info)
+
 
 		}
 	}	
