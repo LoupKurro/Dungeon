@@ -258,7 +258,7 @@ typename list<TYPE>::iterator list<TYPE>::insert(iterator I, const TYPE & e)
 	assert(I._list == this);
 
 	if (_first == nullptr)
-		_first->next = _first->previous = I._current = _first = new cellule<TYPE>(e);
+		I._current = _first->next = _first->previous = _first = new cellule<TYPE>(e);
 
 	else if (I._current == nullptr)
 		I._current = _first->previous = _first->previous->next = new cellule<TYPE>
@@ -288,16 +288,16 @@ typename list<TYPE>::iterator list<TYPE>::erase(iterator I)
 	if (I._current == I._current->previous)	//si il reste une seule cellule
 		_first = I._current = nullptr;		//on met current et first a null
 	else {
-		trash->next->previous = trash->previous;
+		I._current->next->previous = I._current->previous;
 		I._current->previous->next = I._current->next;
 
-		if (trash == _first)
-			_first = trash->next;
+		if (I._current == _first)
+			_first = I._current->next;
 
 		if (I._current == _first->previous)
-			I._current = trash->previous;
+			I._current = I._current->previous;
 		else
-			I._current = trash->next;
+			I._current = I._current->next;
 	}
 
 	delete trash;
