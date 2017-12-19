@@ -7,6 +7,7 @@
 #include "gameMenu.h"
 #include "windowMap.h"
 #include "sqlConnect.h"
+#include "mapInfo.h"
 
 void main()
 {
@@ -16,6 +17,7 @@ void main()
 	if (menu.name()) {
 		sf::String playerName;
 		string pName = playerName;
+		mapInfo info;
 		menu.getName(playerName);
 		char *name =(char*)pName.c_str();
 		cout << name << endl;
@@ -40,7 +42,7 @@ void main()
 			windowMap window;
 			window.createMap(20, 15, 15, 75, 75);
 			window.init();
-			window.eventHandle();
+			window.eventHandle(nextId, info);
 			
 
 		}
