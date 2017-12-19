@@ -15,17 +15,17 @@ void main()
 	
 	if (menu.name()) {
 		sf::String playerName;
-		menu.getName(playerName);
 		string pName = playerName;
+		menu.getName(playerName);
 		char *name =(char*)pName.c_str();
 		cout << name << endl;
 		
-
-		//recherche des infos sur le joueur
-			
 		int nbMap = sql.nbMap(name);
 		cout << nbMap << endl;
+		int nextId = sql.nextMapId() + 1;
+		cout<< "Next map id  " << nextId << endl;
 
+		sf::String plMap[10];
 		sf::String gameToLoad = "";
 		int choice = 1;		
 		
@@ -41,6 +41,8 @@ void main()
 			window.createMap(20, 15, 15, 75, 75);
 			window.init();
 			window.eventHandle();
+			
+
 		}
 	}	
 }

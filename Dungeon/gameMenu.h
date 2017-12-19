@@ -1,6 +1,13 @@
 #pragma once
 
 #include "SFML\Graphics.hpp"
+/**********************************************************
+Creator : Loup Olivier Gaven-Forest & Marie-Noelle Dussault
+Date : December 18th 2017
+File : gameMenu.h
+Goal : Manage and display menus
+**********************************************************/
+
 #include <iostream>
 #include <string>
 
