@@ -39,6 +39,7 @@ public:
 	void ajouteUsager(char *nom);
 	int nbMap(char *nom);
 	void ajouterMap(char *nom, mapInfo info);
+	mapInfo chargerMap(int id);
 
 	int nextMapId();
 };
