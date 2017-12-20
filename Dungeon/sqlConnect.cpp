@@ -76,29 +76,16 @@ void sqlConnect::deconnexion()
 
 
 void sqlConnect::ajouteUsager(char *nom) {
-
+	
 	try
 	{
 		connexion();
 
 		SQLRETURN retcode;
 
-		/*
-		Paramètre SQLBindParameter:
-		- Handler de la requête
-		- No du paramètre (commence à 1)
-		- Est-ce un paramètre de type Input ou Output
-		- Quel est le type de la variable en C++
-		- Quel est le type de la variable en SQL
-		- Quelle est la taille de la colonne dans la BD
-		- Nombre de décimal
-		- Quelle variable ou données (pointeur)
-		- Longueur du buffer
-		- Pointeur du buffer
-		*/
 		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 100, 0, nom, 0, 0);
 
-		retcode = SQLPrepare(sqlStmtHandle, (SQLCHAR*)"INSERT INTO tblPlayer (name_player) VALUES (?)", SQL_NTS);
+		retcode = SQLPrepare(sqlStmtHandle, (SQLCHAR*)"EXEC ajouterJoueur ?", SQL_NTS);
 
 		retcode = SQLExecute(sqlStmtHandle);
 
@@ -154,14 +141,14 @@ int sqlConnect::nbMap(char * nom)
 	deconnexion();
 }
 
-void sqlConnect::ajouterMap(char * nom)
+void sqlConnect::ajouterMap(char * nom, mapInfo info)
 {
 	try
 	{
 		connexion();
 
 		SQLRETURN retcode;
-
+		
 		/*
 		Paramètre SQLBindParameter:
 		- Handler de la requête
@@ -174,10 +161,17 @@ void sqlConnect::ajouterMap(char * nom)
 		- Quelle variable ou données (pointeur)
 		- Longueur du buffer
 		- Pointeur du buffer
+		ajouterMap (@nom VARCHAR(100), @path VARCHAR(255),@dimX INT, @dimY INT,@plX INT, @plY INT ) SQL_C_float
 		*/
 		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 100, 0, nom, 0, 0);
+		retcode = SQLBindParameter(sqlStmtHandle, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 100, 0, path, 0, 0);
+		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 100, 0, dimX, 0, 0);
+		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 100, 0, dimY, 0, 0);
+		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 100, 0, plX, 0, 0);
+		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 100, 0, plY, 0, 0);
 
-		retcode = SQLPrepare(sqlStmtHandle, (SQLCHAR*)"INSERT INTO tblPlayer (name_player) VALUES (?)", SQL_NTS);
+
+		retcode = SQLPrepare(sqlStmtHandle, (SQLCHAR*)"EXEC ajouterMap ?,?,?,?,?,?", SQL_NTS);
 
 		retcode = SQLExecute(sqlStmtHandle);
 
@@ -194,11 +188,7 @@ void sqlConnect::ajouterMap(char * nom)
 		getchar();
 		exit(1);
 	}
-
 	deconnexion();
-
-
-
 }
 
 int sqlConnect::nextMapId()

@@ -15,6 +15,7 @@ Goal : Object controlling databsse connection
 #include <sqlext.h>
 #include <sqltypes.h>
 #include <sql.h>
+#include "mapInfo.h"
 
 using namespace std;
 
@@ -37,7 +38,7 @@ public:
 	
 	void ajouteUsager(char *nom);
 	int nbMap(char *nom);
-	void ajouterMap(char *nom);
+	void ajouterMap(char *nom, mapInfo info);
 
 	int nextMapId();
 };

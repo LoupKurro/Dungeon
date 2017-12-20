@@ -17,6 +17,7 @@ private:
 	sf::Text _title;
 	sf::Font font;
 	sf::Text _name;
+	string _supername;
 	
 public:
 	bool name();
