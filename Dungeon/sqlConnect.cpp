@@ -148,6 +148,12 @@ void sqlConnect::ajouterMap(char * nom, mapInfo info)
 		connexion();
 
 		SQLRETURN retcode;
+		char * path = info.linkMap.c_str();
+		int dimX = info.dimX;
+		int dimY = info.dimY;
+		int plX = info.player.getPosX();
+		int plY = info.player.getPosY();
+
 		
 		/*
 		Paramètre SQLBindParameter:
@@ -165,7 +171,7 @@ void sqlConnect::ajouterMap(char * nom, mapInfo info)
 		*/
 		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 100, 0, nom, 0, 0);
 		retcode = SQLBindParameter(sqlStmtHandle, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 100, 0, path, 0, 0);
-		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 100, 0, dimX, 0, 0);
+		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_C_FLOAT, SQL_INTEGER, 100, 0, dimX, 0, 0);
 		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 100, 0, dimY, 0, 0);
 		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 100, 0, plX, 0, 0);
 		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 100, 0, plY, 0, 0);
@@ -189,6 +195,58 @@ void sqlConnect::ajouterMap(char * nom, mapInfo info)
 		exit(1);
 	}
 	deconnexion();
+}
+
+mapInfo sqlConnect::chargerMap(int id)
+{
+	//doc_map VARCHAR(255), nb_line INT, nb_col INT, pos_j_x INT, pos_j_y INT
+
+	mapInfo info;
+	try
+	{
+		connexion();
+		
+
+		//S'il y a un problème avec la requête on quitte l'application sinon on affiche le résultat
+		if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLCHAR*)"SELECT doc_map, nb_line, nb_col, pos_j_x, pos_j_y FROM tblMap WHERE map_id = id", SQL_NTS)) {
+			throw string("Erreur dans la requête");
+		}
+		else {
+			//Déclarer les variables d'affichage
+			SQLCHAR path[SQL_RESULT_LEN];
+			SQLINTEGER dimX[SQL_RESULT_LEN], dimY[SQL_RESULT_LEN], plX[SQL_RESULT_LEN], plY[SQL_RESULT_LEN];
+			SQLINTEGER ptrPath, ptrDimX, ptrDimY, ptrPlX, ptrPlY;
+
+			while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS) {
+				SQLGetData(sqlStmtHandle, 1, SQL_CHAR, path, SQL_RESULT_LEN, &ptrPath);
+				SQLGetData(sqlStmtHandle, 2, SQL_INTEGER, dimX, SQL_RESULT_LEN, &ptrDimX);
+				SQLGetData(sqlStmtHandle, 3, SQL_INTEGER, dimY, SQL_RESULT_LEN, &ptrDimY);
+				SQLGetData(sqlStmtHandle, 4, SQL_INTEGER, plX, SQL_RESULT_LEN, &ptrPlX);
+				SQLGetData(sqlStmtHandle, 5, SQL_INTEGER, plY, SQL_RESULT_LEN, &ptrPlY);
+			}
+
+			info.linkMap.assign((char*)path);
+			info.dimX = (int)dimX;
+			info.dimY = (int)dimY;
+			info.player.setPosX((int)plX);
+			info.player.setPosY((int)plY);
+
+		}
+	}
+	catch (string const& e)
+	{
+		cout << e << "\n";
+
+		info.linkMap.assign("");
+		info.dimX = 0;
+		info.dimY = 0;
+		info.player.setPosX(0);
+		info.player.setPosY(0);
+
+		deconnexion();
+	}
+	deconnexion();
+	return info;
 }
 
 int sqlConnect::nextMapId()
