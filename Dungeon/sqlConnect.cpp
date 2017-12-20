@@ -148,11 +148,11 @@ void sqlConnect::ajouterMap(char * nom, mapInfo info)
 		connexion();
 
 		SQLRETURN retcode;
-		char * path = info.linkMap.c_str();
-		int dimX = info.dimX;
-		int dimY = info.dimY;
-		int plX = info.player.getPosX();
-		int plY = info.player.getPosY();
+		char * path = (char*)info.linkMap.c_str();
+		SQLINTEGER dimX = info.dimX;
+		SQLINTEGER dimY = info.dimY;
+		SQLINTEGER plX = info.player.getPosX();
+		SQLINTEGER plY = info.player.getPosY();
 
 		
 		/*
@@ -167,15 +167,13 @@ void sqlConnect::ajouterMap(char * nom, mapInfo info)
 		- Quelle variable ou données (pointeur)
 		- Longueur du buffer
 		- Pointeur du buffer
-		ajouterMap (@nom VARCHAR(100), @path VARCHAR(255),@dimX INT, @dimY INT,@plX INT, @plY INT ) SQL_C_float
 		*/
 		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 100, 0, nom, 0, 0);
-		retcode = SQLBindParameter(sqlStmtHandle, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 100, 0, path, 0, 0);
-		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_C_FLOAT, SQL_INTEGER, 100, 0, dimX, 0, 0);
-		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 100, 0, dimY, 0, 0);
-		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 100, 0, plX, 0, 0);
-		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 100, 0, plY, 0, 0);
-
+		retcode = SQLBindParameter(sqlStmtHandle, 2, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 255, 0, path, 0, 0);
+		retcode = SQLBindParameter(sqlStmtHandle, 3, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 4, 0, &dimX, 0, 0);
+		retcode = SQLBindParameter(sqlStmtHandle, 4, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 4, 0, &dimY, 0, 0);
+		retcode = SQLBindParameter(sqlStmtHandle, 5, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 4, 0, &plX, 0, 0);
+		retcode = SQLBindParameter(sqlStmtHandle, 6, SQL_PARAM_INPUT, SQL_INTEGER, SQL_INTEGER, 4, 0, &plY, 0, 0);
 
 		retcode = SQLPrepare(sqlStmtHandle, (SQLCHAR*)"EXEC ajouterMap ?,?,?,?,?,?", SQL_NTS);
 
@@ -251,9 +249,12 @@ mapInfo sqlConnect::chargerMap(int id)
 
 int sqlConnect::nextMapId()
 {
+
 	try
 	{
 		connexion();
+		SQLINTEGER nextId[SQL_RESULT_LEN];
+		SQLINTEGER ptrNextId;
 
 		//S'il y a un problème avec la requête on quitte l'application sinon on affiche le résultat
 		if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLCHAR*)"SELECT MAX(id_map) FROM tblMap", SQL_NTS)) {
@@ -262,14 +263,16 @@ int sqlConnect::nextMapId()
 		else {
 			//Déclarer les variables d'affichage
 
-			SQLINTEGER nextId[SQL_RESULT_LEN];
-			SQLINTEGER ptrNextId;
+			//SQLINTEGER nextId[SQL_RESULT_LEN];
+			//SQLINTEGER ptrNextId;
 
 			while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS) {
 				SQLGetData(sqlStmtHandle, 1, SQL_CHAR, nextId, SQL_RESULT_LEN, &ptrNextId);
 			}
 		}
 	}
+	
+
 	catch (string const& e)
 	{
 		cout << e << "\n";

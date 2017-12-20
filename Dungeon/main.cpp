@@ -26,7 +26,7 @@ void main()
 		
 		int nbMap = sql.nbMap(name);
 		cout << nbMap << endl;
-		int nextId = sql.nextMapId() + 1;
+		int nextId = (sql.nextMapId() + 1);
 		cout<< "Next map id  " << nextId << endl;
 
 		sf::String plMap[10];
@@ -49,7 +49,6 @@ void main()
 			window.init();
 			window.eventHandle(nextId, info);
 			sql.ajouterMap(name, info);
-
 
 		}
 	}	
