@@ -28,6 +28,7 @@ void main()
 		cout << nbMap << endl;
 		int nextId = (sql.nextMapId() + 1);
 		cout<< "Next map id  " << nextId << endl;
+		cout << "nbMap " << nbMap << endl;
 
 		sf::String plMap[10];
 		sf::String gameToLoad = "";
