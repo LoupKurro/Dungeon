@@ -113,8 +113,12 @@ int sqlConnect::nbMap(char * nom)
 	{
 		connexion();
 
+
+		SQLRETURN retcode;
+
+		retcode = SQLBindParameter(sqlStmtHandle, 1, SQL_PARAM_INPUT, SQL_C_CHAR, SQL_CHAR, 100, 0, nom, 0, 0);
 		//S'il y a un problème avec la requête on quitte l'application sinon on affiche le résultat
-		if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLCHAR*)"SELECT dbo.nbMap('Marcel')", SQL_NTS)) {
+		if (SQL_SUCCESS != SQLExecDirect(sqlStmtHandle, (SQLCHAR*)"SELECT dbo.nbMap(?)", SQL_NTS)) {
 			throw string("Erreur dans la requête");
 		}
 		else {
@@ -126,6 +130,9 @@ int sqlConnect::nbMap(char * nom)
 			while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS) {
 				SQLGetData(sqlStmtHandle, 1, SQL_CHAR, nbMap, SQL_RESULT_LEN, &ptrnbMap);
 
+			if (SQL_SUCCESS != retcode) {
+				throw string("Erreur dans la requête");
+			}
 
 				//Afficher le résultat d'une requête			
 				cout << nom << "  " << nbMap << endl;
@@ -267,8 +274,9 @@ int sqlConnect::nextMapId()
 			//SQLINTEGER ptrNextId;
 
 			while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS) {
-				SQLGetData(sqlStmtHandle, 1, SQL_CHAR, nextId, SQL_RESULT_LEN, &ptrNextId);
+				SQLGetData(sqlStmtHandle, 1, SQL_INTEGER, nextId, SQL_RESULT_LEN, &ptrNextId);
 			}
+			cout << nextId << endl;
 		}
 	}
 	
