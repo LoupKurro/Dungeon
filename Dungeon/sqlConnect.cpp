@@ -108,7 +108,7 @@ void sqlConnect::ajouteUsager(char *nom) {
 
 int sqlConnect::nbMap(char * nom)
 {
-
+	int nbMapInt;
 	try
 	{
 		connexion();
@@ -123,7 +123,6 @@ int sqlConnect::nbMap(char * nom)
 		}
 		else {
 			//Déclarer les variables d'affichage
-
 			SQLCHAR nbMap[SQL_RESULT_LEN];
 			SQLINTEGER ptrnbMap;
 
@@ -133,9 +132,10 @@ int sqlConnect::nbMap(char * nom)
 			if (SQL_SUCCESS != retcode) {
 				throw string("Erreur dans la requête");
 			}
-
-				//Afficher le résultat d'une requête			
-				cout << nom << "  " << nbMap << endl;
+			cout << nom << "  " << nbMap << endl;
+			nbMapInt = (int)*nbMap - 48;
+			//Afficher le résultat d'une requête			
+			cout << nom << "  " << nbMapInt << endl;
 			}
 		}
 	}
@@ -146,6 +146,7 @@ int sqlConnect::nbMap(char * nom)
 	}
 
 	deconnexion();
+	return nbMapInt;
 }
 
 void sqlConnect::ajouterMap(char * nom, mapInfo info)
@@ -256,11 +257,11 @@ mapInfo sqlConnect::chargerMap(int id)
 
 int sqlConnect::nextMapId()
 {
-
+	int nextIdInt;
 	try
 	{
 		connexion();
-		SQLINTEGER nextId[SQL_RESULT_LEN];
+		SQLCHAR nextId[SQL_RESULT_LEN];
 		SQLINTEGER ptrNextId;
 
 		//S'il y a un problème avec la requête on quitte l'application sinon on affiche le résultat
@@ -274,9 +275,9 @@ int sqlConnect::nextMapId()
 			//SQLINTEGER ptrNextId;
 
 			while (SQLFetch(sqlStmtHandle) == SQL_SUCCESS) {
-				SQLGetData(sqlStmtHandle, 1, SQL_INTEGER, nextId, SQL_RESULT_LEN, &ptrNextId);
+				SQLGetData(sqlStmtHandle, 1, SQL_CHAR, nextId, SQL_RESULT_LEN, &ptrNextId);
 			}
-			cout << nextId << endl;
+			nextIdInt = (int)*nextId - 48;
 		}
 	}
 	
@@ -287,5 +288,6 @@ int sqlConnect::nextMapId()
 		deconnexion();
 	}
 	deconnexion();
+	return nextIdInt;
 }
 
