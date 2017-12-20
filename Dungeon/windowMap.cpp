@@ -42,11 +42,18 @@ void windowMap::createMap(int nbRoom, int xRoom, int yRoom, int xMap, int yMap)
 	_sMap.setPosition(sf::Vector2f(0, 0));
 }
 
-//Initialise the visual with the created map
+//Initialise the hero and the visual of the created map
 void windowMap::init() 
 {
 	//Creating character
 	_hero.setPositionXY(_map.getLastDoorY(), _map.getLastDoorX());
+
+	visualInit();
+}
+
+//Inititalise the visuals
+void windowMap::visualInit()
+{
 	_sHero.setPosition(sf::Vector2f((_hero.getPosX() * 25), (_hero.getPosY() * 25)));
 
 	//Setting the camera starting position
@@ -204,4 +211,21 @@ mapInfo windowMap::save(int id)
 	information.dimY = _map.nbCol();
 
 	return information;
+}
+
+//Load the map as the informations of the map from the database
+void windowMap::load(mapInfo& information)
+{
+	string nomFichier = information.linkMap;
+	ifstream fin;
+
+	_map.resize(information.dimX, information.dimY);
+	fin.open(nomFichier.c_str());
+	_map.read(fin);
+	fin.close();
+
+	_hero.setPosX(information.player.getPosX());
+	_hero.setPosY(information.player.getPosY());
+
+	visualInit();
 }
